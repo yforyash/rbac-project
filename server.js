@@ -4,7 +4,7 @@ const app = express();
 const PORT=process.env.PORT || 5010;
 app.use(express.json());
 const routes = require('./src/routes');
-app.use('/api', routes);
+app.use('/api', routes); //grandfather route for all API endpoints
 
 
 

@@ -9,7 +9,7 @@ const roles={
         can:['view'],
     },
 };
-
+module.exports= roles;
 // users - table
 // id, name , email, password, role.
 // 1, Ram, email, password, admin

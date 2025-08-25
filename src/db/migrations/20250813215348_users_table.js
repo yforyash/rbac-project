@@ -11,7 +11,9 @@ exports.up = function(knex) {
       t.increments('id').primary();
       t.string('name', 20);
       t.string('email', 50);
+      t.string('role', 20).defaultTo('viewer');
       t.text('password');
+      t.text('jwt_secret').nullable();
     });
   }
 });

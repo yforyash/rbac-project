@@ -3,10 +3,11 @@ const roles = require('../config/roles');
 // proper roles name required from previous middleware
 // role name check in roles arrya
 // once veryfy forward it to next function for controller
-const checkRole=(role,action)=>{
+const checkRole=(action)=>{
     return(req,res,next)=>{
         const userRole=req.user.role;
         const permissions=roles[userRole].can;
+        
         if(permissions.includes(action)){
             next();
         }
