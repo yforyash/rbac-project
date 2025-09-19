@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const userRepo = require('../repositories/userRepo');
+const userRepo = require('../../repositories/users/userRepo');
 
 const createUsers = async (userData) => {
   const checkExistingUser = await userRepo.getUserByEmail(userData.email);

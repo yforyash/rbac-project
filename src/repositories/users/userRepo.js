@@ -1,4 +1,4 @@
-const db = require('../config/dbConnection');
+const db = require('../../config/dbConnection');
 
 module.exports = {
     getAllUsers: async () => {

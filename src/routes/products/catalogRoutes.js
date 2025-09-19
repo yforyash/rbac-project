@@ -1,0 +1,11 @@
+const express = require('express');
+const catalogControllers = require('../../controllers/products/catalogControllers');
+const authMiddleware = require('../../middleware/authMiddleware');
+const checkRole = require('../../middleware/rolesmiddleware');     
+const router = express.Router(); 
+router.post('/create', authMiddleware, checkRole('create'), catalogControllers.createCatalog);
+router.get('/getAll', authMiddleware, checkRole('view'), catalogControllers.getAllCatalogs);
+router.get('/:id', authMiddleware, checkRole('view'),catalogControllers.getCatalogById);
+router.put('/:id', authMiddleware, checkRole('edit'), catalogControllers.updateCatalog);        
+router.delete('/:id', authMiddleware, checkRole('delete'), catalogControllers.deleteCatalog);
+module.exports = router;

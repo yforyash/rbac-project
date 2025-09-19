@@ -5,14 +5,14 @@ const {
   getAllUsers,
   getUserById,
   deleteUser,
-} = require("../services/createUserServices");
-const { loginUserService } = require("../services/loginUserService");
+} = require("../../services/user/createUserServices");
+const { loginUserService } = require("../../services/user/loginUserService");
 
 exports.createUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    //const user = req.body
-    const user = await createUsers({ name, email, password, role }); // (user)
+    
+    const user = await createUsers({ name, email, password, role }); 
     if (!user) {
       return res.json({ success: false, message: "Error creating account." });
     }
@@ -38,7 +38,7 @@ console.log("user details", user);
     return res.json({
       success: true,
       message: "Logged in successfully.",
-      data: user.token,
+      data: user.token
     });
   } catch (error) {
     console.log(error.message);

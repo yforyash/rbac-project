@@ -1,7 +1,7 @@
 //email, password,
 // 
 const bcrypt = require('bcryptjs');
-const userRepo = require('../repositories/userRepo');
+const userRepo = require('../../repositories/users/userRepo');
 const jwt = require("jsonwebtoken");
 exports.loginUserService = async (email , password) => {
     const user = await userRepo.getUserByEmail(email);
