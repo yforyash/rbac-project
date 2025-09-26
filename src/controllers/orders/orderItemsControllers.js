@@ -8,8 +8,8 @@ const {
 
 exports.createOrderItem = async (req, res) => {
   try {
-    const { order_id, product_id, quantity, price } = req.body;
-    const orderItem = await createOrderItem({ order_id, product_id, quantity, price });
+    const { order_id, product_code, quantity, price } = req.body;
+    const orderItem = await createOrderItem({ order_id, product_code, quantity, price });
     return res.status(201).json({
       success: true,
       message: "Order item created successfully",

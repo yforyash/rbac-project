@@ -21,4 +21,16 @@ module.exports = {
   deleteCart: async (id) => {
     return await db(TABLE).where({ id }).del();
   },
+
+  getCartWithTotalByUserId: async (userId) => {
+    return await db(TABLE)
+      .join("product_variants", "cart.product_variant_id", "product_variants.id")
+      .select(
+        "cart.id as cart_id",
+        "cart.quantity",
+        "product_variants.id as variant_id",
+        "product_variants.price"
+      )
+      .where("cart.user_id", userId);
+  },
 };

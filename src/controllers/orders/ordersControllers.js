@@ -4,12 +4,13 @@ const {
   orderById,
   updatedOrder,
   deletedOrder,
+  createOrderFromCart,
 } = require("../../services/orders/ordersServices");
 
 exports.createOrder = async (req, res) => {
   try {
-    const { user_id, total_amount, status } = req.body;
-    const order = await createOrder({ user_id, total_amount, status });
+    const {user_id, total_amount, status } = req.body;
+    const order = await createOrder({user_id, total_amount, status });
     return res.status(201).json({
       success: true,
       message: "Order created successfully",
@@ -18,6 +19,21 @@ exports.createOrder = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+exports.createOrderFromCart = async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    const order = await createOrderFromCart(user_id);
+    return res.status(201).json({
+      success: true,
+      message: "Order created from cart successfully",
+      order,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({ success: false, message: error.message });
   }
 };
 

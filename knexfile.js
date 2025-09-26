@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 
 module.exports = {
   development: {
@@ -9,10 +10,12 @@ module.exports = {
       user: process.env.DB_USERNAME,
       database: process.env.DATABASE,
       password: process.env.DB_PASSWORD,
-      // ssl: process.env.DB_SSL ? { rejectUnauthorized: false } : false,
     },
     migrations: {
-      directory: './src/db/migrations',
+      directory: path.resolve(__dirname, 'src', 'db', 'migrations'), 
+    },
+    seeds: {
+      directory: path.resolve(__dirname, 'src', 'db', 'seeds'), 
     },
   },
 };

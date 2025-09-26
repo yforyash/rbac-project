@@ -11,15 +11,15 @@ const { productById } = require("../../services/products/productService");
 
 exports.createProductVariation = async (req, res) => {
   try {
-    const { product_id, variant_name, additional_price, stock } = req.body;
+    const { product_code, product_name, price, quantity} = req.body;
 
    
-    const product = await productById(product_id);
+    const product = await productById(product_code);
     if (!product) {
       return res.status(400).json({ success: false, message: "Associated product not found" });
     }
 
-    const variation = await createProductVariation({ product_id, variant_name, additional_price, stock });
+    const variation = await createProductVariation({ product_code, product_name, price, quant});
     return res.status(201).json({ success: true, message: "Product variation created", variation });
   } catch (error) {
     console.error(error.message);

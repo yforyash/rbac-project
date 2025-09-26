@@ -10,5 +10,6 @@ router.get("/getAll", authMiddleware, checkRole("view"), cartControllers.getAllC
 router.get("/:id", authMiddleware, checkRole("view"), cartControllers.getCartById);
 router.put("/:id", authMiddleware, checkRole("edit"), cartControllers.updateCart);
 router.delete("/:id", authMiddleware, checkRole("delete"), cartControllers.deleteCart);
+router.post("/checkout/:userId", authMiddleware, checkRole("view"), cartControllers.checkoutCart);
 
 module.exports = router;

@@ -4,12 +4,13 @@ const {
   cartById,
   updatedCart,
   deletedCart,
+  checkoutCart,
 } = require("../../services/payments/cartServices");
 
 exports.createCart = async (req, res) => {
   try {
-    const { user_id, product_variant_id, quantity } = req.body;
-    const cart = await createCart({ user_id, product_variant_id, quantity });
+    const { user_id, product_code, quantity } = req.body;
+    const cart = await createCart({ user_id, product_code, quantity });
     return res.status(201).json({ success: true, message: "Cart item created", cart });
   } catch (error) {
     console.log(error.message);
@@ -58,5 +59,20 @@ exports.deleteCart = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(404).json({ success: false, message: error.message });
+  }
+};
+
+exports.checkoutCart = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const result = await checkoutCart(user_id);
+    return res.status(200).json({
+      success: true,
+      message: "Checkout successful",
+      cart: result,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({ success: false, message: error.message });
   }
 };

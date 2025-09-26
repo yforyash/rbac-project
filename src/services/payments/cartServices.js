@@ -27,10 +27,27 @@ const deletedCart = async (id) => {
   return { message: "Cart item deleted successfully" };
 };
 
+const checkoutCart = async (userId) => {
+  const items = await cartRepo.getCartWithTotalByUserId(userId);
+  if (!items || items.length === 0) throw new Error("Cart is empty");
+
+  const totalAmount = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  return {
+    userId,
+    items,
+    totalAmount,
+  };
+};
+
 module.exports = {
   createCart,
   getAllCarts,
   cartById,
   updatedCart,
   deletedCart,
+  checkoutCart,
 };

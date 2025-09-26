@@ -1,7 +1,33 @@
 const ordersRepo = require("../../repositories/orders/ordersRepo");
+const cartRepo = require("../../repositories/payments/cartRepo");
+const orderItemsRepo = require("../../repositories/orders/orderItemsRepo");
 
 const createOrder = async (orderData) => {
   return await ordersRepo.createOrder(orderData);
+};
+
+const createOrderFromCart = async (userId) => {
+  const cartItems = await cartRepo.getCartWithTotalByUserId(userId);
+  if (!cartItems || cartItems.length === 0) throw new Error("Cart is empty");
+
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const [order] = await ordersRepo.createOrder({
+    user_id: userId,
+    total_amount: total,
+    status: "pending",
+  });
+
+  for (const item of cartItems) {
+    await orderItemsRepo.addOrderItem({
+      order_id: order.id,
+      product_variant_id: item.variant_id,
+      quantity: item.quantity,
+      price: item.price,
+    });
+  }
+
+  return order;
 };
 
 const getAllOrders = async () => {
@@ -29,6 +55,7 @@ const deletedOrder = async (id) => {
 
 module.exports = {
   createOrder,
+  createOrderFromCart,
   getAllOrders,
   orderById,
   updatedOrder,
