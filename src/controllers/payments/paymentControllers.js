@@ -8,13 +8,14 @@ const {
 
 exports.createPayment = async (req, res) => {
   try {
-    const { user_id, amount, payment_date, method, status } = req.body;
+    const { order_id, amount, payment_method, status, transaction_id, paid_at } = req.body;
     const payment = await createPayment({
-      user_id,
+      order_id,
       amount,
-      payment_date,
-      method,
+      payment_method,
       status,
+      transaction_id,
+      paid_at,
     });
     return res
       .status(201)
@@ -34,6 +35,7 @@ exports.getAllPayments = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
 exports.getPaymentById = async (req, res) => {
   try {
     const payment = await paymentById(req.params.id);
@@ -51,13 +53,14 @@ exports.getPaymentById = async (req, res) => {
 
 exports.updatePayment = async (req, res) => {
   try {
-    const { user_id, amount, payment_date, method, status } = req.body;
+    const { order_id, amount, payment_method, status, transaction_id, paid_at } = req.body;
     const payment = await updatedPayment(req.params.id, {
-      user_id,
+      order_id,
       amount,
-      payment_date,
-      method,
+      payment_method,
       status,
+      transaction_id,
+      paid_at,
     });
     if (!payment) {
       return res

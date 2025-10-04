@@ -11,11 +11,13 @@ module.exports = {
   },
 
   createBilling: async (billingData) => {
-    return await db(TABLE).insert(billingData);
+    const [billing] = await db(TABLE).insert(billingData).returning("*");
+    return billing;
   },
 
   updateBilling: async (id, billingData) => {
-    return await db(TABLE).where({ id }).update(billingData);
+    const [billing] = await db(TABLE).where({ id }).update(billingData).returning("*");
+    return billing;
   },
 
   deleteBilling: async (id) => {

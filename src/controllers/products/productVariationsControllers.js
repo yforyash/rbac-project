@@ -19,7 +19,7 @@ exports.createProductVariation = async (req, res) => {
       return res.status(400).json({ success: false, message: "Associated product not found" });
     }
 
-    const variation = await createProductVariation({ product_code, product_name, price, quant});
+    const variation = await createProductVariation({ product_code, product_name, price, quantity});
     return res.status(201).json({ success: true, message: "Product variation created", variation });
   } catch (error) {
     console.error(error.message);

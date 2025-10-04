@@ -1,23 +1,26 @@
 const db = require("../../config/dbConnection");
-const TABLE = "billing";
+const TABLE = "payments";
 
 module.exports = {
-  getAllBillings: async () => {
+  getAllPayments: async () => {
     return await db(TABLE).select("*");
   },
 
-  getBillingById: async (id) => {
+  getPaymentById: async (id) => {
     return await db(TABLE).where({ id }).first();
   },
 
-  createBilling: async (billingData) => {
-    return await db(TABLE).insert(billingData).returning("*");
-  },
-  updateBilling: async (id, billingData) => {
-    return await db(TABLE).where({ id }).update(billingData).returning("*");
+  createPayment: async (paymentData) => {
+    const [payment] = await db(TABLE).insert(paymentData).returning("*");
+    return payment;
   },
 
-  deleteBilling: async (id) => {
+  updatePayment: async (id, paymentData) => {
+    const [payment] = await db(TABLE).where({ id }).update(paymentData).returning("*");
+    return payment;
+  },
+
+  deletePayment: async (id) => {
     return await db(TABLE).where({ id }).del();
   },
 };

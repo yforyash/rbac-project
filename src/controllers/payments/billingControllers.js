@@ -1,5 +1,5 @@
 const {
-    createBilling,
+  createBilling,
   getAllBillings,
   billingById,
   updatedBilling,
@@ -8,8 +8,14 @@ const {
 
 exports.createBilling = async (req, res) => {
   try {
-    const { user_id, amount, billing_date, status } = req.body;
-    const billing = await createBilling({ user_id, amount, billing_date, status });
+    const { order_id, billing_name, billing_email, billing_phone, billing_address } = req.body;
+    const billing = await createBilling({ 
+      order_id, 
+      billing_name, 
+      billing_email, 
+      billing_phone, 
+      billing_address 
+    });
     return res.status(201).json({ success: true, message: "Billing record created", billing });
   } catch (error) {
     console.error(error.message);
@@ -29,7 +35,7 @@ exports.getAllBillings = async (req, res) => {
 
 exports.getBillingById = async (req, res) => {
   try {
-    const billing = await billingById(req.params.id);        
+    const billing = await billingById(req.params.id);
     if (!billing) {
       return res.status(404).json({ success: false, message: "Billing record not found" });
     }
@@ -42,15 +48,21 @@ exports.getBillingById = async (req, res) => {
 
 exports.updateBilling = async (req, res) => {
   try {
-    const { user_id, amount, billing_date, status } = req.body;
-    const billing = await updatedBilling(req.params.id, { user_id, amount, billing_date, status });
+    const { order_id, billing_name, billing_email, billing_phone, billing_address } = req.body;
+    const billing = await updatedBilling(req.params.id, { 
+      order_id, 
+      billing_name, 
+      billing_email, 
+      billing_phone, 
+      billing_address 
+    });
     if (!billing) {
       return res.status(404).json({ success: false, message: "Billing record not found" });
     }
     return res.status(200).json({ success: true, message: "Billing record updated", billing });
   } catch (error) {
     console.error(error.message);
-    return res.status(      500).json({ success: false, message: "Server Error" });
+    return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -65,4 +77,4 @@ exports.deleteBilling = async (req, res) => {
     console.error(error.message);
     return res.status(500).json({ success: false, message: "Server Error" });
   }
-};      
+};
